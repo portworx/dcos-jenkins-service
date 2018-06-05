@@ -25,9 +25,7 @@
       {{#networking.virtual-host}}
       "JENKINS_ROOT_URL": "{{#networking.https-redirect}}https://{{/networking.https-redirect}}{{^networking.https-redirect}}http://{{/networking.https-redirect}}{{networking.virtual-host}}/service/{{service.name}}",
       {{/networking.virtual-host}}
-      {{^storage.host-volume}}
-        "JENKINS_HOME":"/mnt/mesos/sandbox/jenkins_home",
-      {{/storage.host-volume}}
+      "JENKINS_HOME":"/mnt/mesos/sandbox/jenkins_home",
       "JVM_OPTS": "{{advanced.jvm-opts}}",
       "JENKINS_OPTS": "{{advanced.jenkins-opts}}",
       "PROMETHEUS_ENDPOINT": "{{advanced.prometheus-endpoint}}",
@@ -45,34 +43,18 @@
           "image": "{{resource.assets.container.docker.jenkins}}"
         },
         "volumes": [
-          {{#storage.host-volume}}
-            {
-              "containerPath": "/var/jenkinsdcos_home",
-              "hostPath": "{{storage.host-volume}}/{{service.name}}",
-              "mode": "RW"
-            }
-          {{/storage.host-volume}}
-          {{^storage.external-persistent-volume-name}}
-            {
-              "persistent": {
-                "size": {{storage.local-persistent-volume-size}}
-              },
-              "mode": "RW",
-              "containerPath": "jenkins_home"
-            }
-          {{/storage.external-persistent-volume-name}}
-          {{#storage.external-persistent-volume-name}}
             {
               "external": {
-                "size": {{storage.external-persistent-volume-size}},
-                "name": "{{storage.external-persistent-volume-name}}",
+                "size": {{storage.portworx-volume-size}},
+                "name": "{{storage.portworx-volume-name}}",
                 "provider": "dvdi",
-                "options": { "dvdi/driver": "rexray" }
+                "options": {
+                  "dvdi/driver": "pxd"
+                }
               },
               "mode": "RW",
               "containerPath": "jenkins_home"
             }
-          {{/storage.external-persistent-volume-name}}
         ]
    },
    {{#advanced.docker-credentials-uri}}
