@@ -50,6 +50,7 @@
                 "portworx-volume-size": {
                     "description": "Size of the Portworx volume in GB.",
                     "type": "number",
+                    "minimum": 1,
                     "default": 10
                 },
                 "portworx-volume-replication-factor": {
@@ -61,7 +62,9 @@
                 }
             },
             "required": [
-                "portworx-volume-name"
+                "portworx-volume-name",
+                "portworx-volume-size",
+                "portworx-volume-replication-factor"
             ]
         },
         "networking": {
