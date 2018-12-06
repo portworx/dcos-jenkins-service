@@ -8,7 +8,7 @@
                 "name": {
                     "description": "The name of the service to display in the DC/OS dashboard.",
                     "type": "string",
-                    "default": "jenkins"
+                    "default": "portworx-jenkins"
                 },
                 "cpus": {
                     "description": "CPU shares to allocate to each Jenkins master.",
@@ -48,9 +48,16 @@
                     "default": "jenkins-master"
                 },
                 "portworx-volume-size": {
-                    "description": "Size of the Portworx volume.",
+                    "description": "Size of the Portworx volume in GB.",
                     "type": "number",
                     "default": 10
+                },
+                "portworx-volume-replication-factor": {
+                    "description": "Replication factor of the Portworx volume.",
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 3,
+                    "default": 1
                 }
             },
             "required": [
