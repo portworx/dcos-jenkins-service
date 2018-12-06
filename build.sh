@@ -34,4 +34,4 @@ if [ -z "${JENKINS_PACKAGE_VERSION}" ]; then
 fi
 
 # Use tooling to reference the correct image (via templating) and publish stub
-env TEMPLATE_DOCKER-IMAGE="${DOCKER_IMAGE}" tools/publish_aws.py jenkins $JENKINS_PACKAGE_VERSION universe/
+env TEMPLATE_DOCKER-IMAGE="${DOCKER_IMAGE}" tools/publish_aws.py portworx-jenkins $JENKINS_PACKAGE_VERSION universe/
