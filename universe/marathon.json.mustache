@@ -25,7 +25,7 @@
       {{/service.security.strict-mode}}
       "JENKINS_CONTEXT": "/service/{{service.name}}",
       "JENKINS_MESOS_MASTER": "{{service.mesos-master}}",
-      "JENKINS_HOME": "/var/jenkins_home",
+      "JENKINS_HOME":"/mnt/mesos/sandbox/jenkins_home",
       {{#service.marathon-lb.virtual-host}}
       "JENKINS_ROOT_URL": "{{#service.marathon-lb.https-redirect}}https://{{/service.marathon-lb.https-redirect}}{{^service.marathon-lb.https-redirect}}http://{{/service.marathon-lb.https-redirect}}{{service.marathon-lb.virtual-host}}/service/{{service.name}}",
       {{/service.marathon-lb.virtual-host}}
@@ -69,9 +69,13 @@
           {
             "containerPath": "jenkins_home",
             "persistent": {
-            "type": "root",
-            "size": 2048,
-            "constraints": []
+              "size": {{service.storage.portworx-volume-size}},
+              "name": "{{service.storage.portworx-volume-name}}",
+                "provider": "dvdi",
+                "options": {
+                  "dvdi/driver": "pxd",
+                  "dvdi/repl": "{{service.storage.portworx-volume-replication-factor}}"
+                }
             },
             "mode": "RW"
           },

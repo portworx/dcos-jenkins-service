@@ -28,5 +28,9 @@ else
 	docker push "${DOCKER_IMAGE}"
 fi
 
+if [ -z "${JENKINS_PACKAGE_VERSION}" ]; then
+    # If no package version is specified build with version stub-universe
+    JENKINS_PACKAGE_VERSION="stub-universe"
+fi
 # Use tooling to reference the correct image (via templating) and publish stub
-env TEMPLATE_DOCKER-IMAGE="${DOCKER_IMAGE}" tools/publish_aws.py jenkins stub-universe-all-ucr universe/
+env TEMPLATE_DOCKER-IMAGE="${DOCKER_IMAGE}" tools/publish_aws.py portworx-jenkins $JENKINS_PACKAGE_VERSION universe/
