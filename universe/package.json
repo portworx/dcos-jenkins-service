@@ -2,7 +2,7 @@
     "packagingVersion": "3.0",
     "name": "portworx-jenkins",
     "version": "{{package-version}}",
-    "minDcosReleaseVersion": "1.11",
+    "minDcosReleaseVersion": "2.0",
     "scm": "https://github.com/portworx/dcos-jenkins-service.git",
     "maintainer": "support@portworx.io",
     "website": "https://www.portworx.com",

@@ -68,7 +68,7 @@
           {{^service.storage.host-volume}}
           {
             "containerPath": "jenkins_home",
-            "persistent": {
+            "external": {
               "size": {{service.storage.portworx-volume-size}},
               "name": "{{service.storage.portworx-volume-name}}",
                 "provider": "dvdi",
