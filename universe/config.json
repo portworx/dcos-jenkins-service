@@ -9,7 +9,7 @@
                     "description": "Unique name for the service instance consisting of a series of words separated by slashes. Each word must be at least 1 alphanumeric character and may only contain digits (`0-9`), dashes (`-`), dots (`.`), and lowercase letters (`a-z`). The word may not begin or end with a dash",
                     "type": "string",
                     "pattern": "^(\\/?((\\.\\.)|(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]))?($|\\/))+$",
-                    "default": "jenkins"
+                    "default": "portworx-jenkins"
                 },
                 "cpus": {
                     "description": "CPU shares to allocate to each Jenkins master.",
@@ -43,15 +43,34 @@
             "description": "Storage-related configuration properties for Jenkins on DC/OS.",
             "type": "object",
             "properties": {
-                "host-volume": {
-                    "description": "The location of a volume on the host to be used for persisting Jenkins configuration and build data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/jenkins`). Note that this path must be the same on all DC/OS agents.",
-                    "type": "string"
+                "portworx-volume-name": {
+                    "description": "Name of the Portworx volume.",
+                    "type": "string",
+                    "default": "jenkins-master"
+                },
+                "portworx-volume-size": {
+                    "description": "Size of the Portworx volume in GB.",
+                    "type": "number",
+                    "minimum": 1,
+                    "default": 10
+                },
+                "portworx-volume-replication-factor": {
+                    "description": "Replication factor of the Portworx volume.",
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 3,
+                    "default": 1
                 },
                 "pinned-hostname": {
                     "description": "An optional DC/OS agent hostname to run this Jenkins instance on (e.g. 10.0.0.1).",
                     "type": "string"
                 }
-            }
+            },
+            "required": [
+                "portworx-volume-name",
+                "portworx-volume-size",
+                "portworx-volume-replication-factor"
+            ]
         },
         "networking": {
             "description": "Networking-related configuration properties for Jenkins on DC/OS.",
